@@ -125,23 +125,19 @@ public class ManageUser {
     }
     public static boolean loginUser(String userid, String password) {
         Connection conn = JDBCUtil.getConnection();
-        String sql = "SELECT COUNT(*) FROM user_table WHERE userid = ? AND password = ?";
+        String sql =  "SELECT * FROM user_table WHERE userId = ? AND password = ?";
 
         try(PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1,userid);
-            pstmt.setString(2,password);
-            ResultSet rs = pstmt.executeQuery();
-            ArrayList<User> users = new ArrayList<>();
+            pstmt.setString(1, userid);
+            pstmt.setString(2, password);
 
-            if(rs.next()){
-                int count = rs.getInt(1);
-                return count > 0;
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) return true;
+                return false;
             }
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException();
         }
-        return false;
     }
 }
