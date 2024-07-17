@@ -68,4 +68,36 @@ public class ManageUser {
             throw new RuntimeException(e);
         }
     }
+    public void searchUserByName(String namePart) throws SQLException {
+        Connection conn = JDBCUtil.getConnection();
+        String sql = "SELECT * FROM user_table WHERE name LIKE ?";
+
+        try(PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, "%" +namePart + "%");
+            ResultSet rs = pstmt.executeQuery();
+            ArrayList<User> users = new ArrayList<>();
+
+            while(rs.next()){
+                int id = rs.getInt("id");
+                String userid = rs.getString("userid");
+                String name = rs.getString("name");
+                String password = rs.getString("password");
+                int age = rs.getInt("age");
+                boolean membership = rs.getBoolean("membership");
+                Timestamp signup = rs.getTimestamp("signup_date");
+
+                User user= new User(id,userid,name,password,age,membership,signup);
+                users.add(user);
+            }
+            if(users.isEmpty()) {
+                System.out.println("검색된 회원이 없습니다.");
+            } else {
+                users.forEach( System.out::println);
+            }
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
 }
