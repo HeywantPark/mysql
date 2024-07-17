@@ -14,7 +14,8 @@ public class ManageUserProgramV4 {
             System.out.println("2. 회원 추가");
             System.out.println("3. 회원 삭제");
             System.out.println("4. 특정 이름을 가지는 회원 조회");
-            System.out.println("5. 종료");
+            System.out.println("5. 회원 정보 수정");
+            System.out.println("6. 종료");
             System.out.print("원하는 작업 번호를 입력하세요 : ");
 
             int chi = sc.nextInt();
@@ -43,10 +44,25 @@ public class ManageUserProgramV4 {
                 int deleteId = sc.nextInt();
                 manageUser.deleteUser(deleteId);
             } else if(chi == 4) {
-                System.out.print("검색할 이름의 일부를 입력하세요 :");
+                System.out.print("검색할 이름의 일부를 입력하세요 : ");
                 String namePart = sc.nextLine();
                 manageUser.searchUserByName(namePart);
             } else if(chi == 5) {
+                System.out.print("수정할 회원의 ID를 입력하세요 : ");
+                int id = sc.nextInt();
+                sc.nextLine();
+                System.out.print("새 이름 : ");
+                String newName = sc.nextLine();
+                System.out.print("새 비밀번호 : ");
+                String newPassword = sc.nextLine();
+                System.out.print("새 나이 : ");
+                int newAge = sc.nextInt();
+                sc.nextLine();
+                System.out.print("새 멤버쉽 여부 : ");
+                boolean newMS = sc.nextBoolean();
+                sc.nextLine();
+                manageUser.updateUser(id, newName,newPassword,newAge,newMS);
+            } else if(chi == 6) {
                 System.out.println("프로그램을 종료합니다.");
                 sc.close();
                 System.exit(0);

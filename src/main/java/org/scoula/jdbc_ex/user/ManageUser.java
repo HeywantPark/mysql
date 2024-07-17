@@ -24,7 +24,7 @@ public class ManageUser {
         }
         System.out.println("회원이 성공적으로 추가 되었습니다.");
     }
-    public void deleteUser(int id) throws SQLException {
+    public void deleteUser(int id)  {
         Connection conn = JDBCUtil.getConnection();
         String sql = "DELETE FROM user_table WHERE id = ?";
 
@@ -68,7 +68,7 @@ public class ManageUser {
             throw new RuntimeException(e);
         }
     }
-    public void searchUserByName(String namePart) throws SQLException {
+    public void searchUserByName(String namePart)  {
         Connection conn = JDBCUtil.getConnection();
         String sql = "SELECT * FROM user_table WHERE name LIKE ?";
 
@@ -94,6 +94,30 @@ public class ManageUser {
             } else {
                 users.forEach( System.out::println);
             }
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+    public void updateUser(int id, String newName,String newPassword,int newAge,boolean newMS) {
+        Connection conn = JDBCUtil.getConnection();
+        String sql = "UPDATE user_table SET name = ?, password = ?, age = ?, membership = ? WHERE id = ?";
+
+        try(PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1,newName);
+            pstmt.setString(2,newPassword);
+            pstmt.setInt(3,newAge);
+            pstmt.setBoolean(4,newMS);
+            pstmt.setInt(5,id);
+
+            int affectedRows = pstmt.executeUpdate();
+            if(affectedRows == 1) {
+                System.out.println("사용자의 이름이 성공적으로 수정되었습니다.");
+            } else {
+                System.out.println("해당 ID의 사용자가 존재하지 않습니다. ");
+            }
+
         }
         catch (SQLException e) {
             e.printStackTrace();
