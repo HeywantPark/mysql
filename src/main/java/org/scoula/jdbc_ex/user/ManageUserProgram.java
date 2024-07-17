@@ -43,7 +43,5 @@ public class ManageUserProgram {
         //회원 목록 출력
         ManageUser manageUser2 = new ManageUser();
         manageUser2.getAllUser();
-
-
     }
 }
