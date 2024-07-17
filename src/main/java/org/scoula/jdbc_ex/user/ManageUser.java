@@ -113,11 +113,10 @@ public class ManageUser {
 
             int affectedRows = pstmt.executeUpdate();
             if(affectedRows == 1) {
-                System.out.println("사용자의 이름이 성공적으로 수정되었습니다.");
+                System.out.println("해당 ID의 정보가 성공적으로 수정되었습니다.");
             } else {
                 System.out.println("해당 ID의 사용자가 존재하지 않습니다. ");
             }
-
         }
         catch (SQLException e) {
             e.printStackTrace();
