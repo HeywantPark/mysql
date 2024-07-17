@@ -123,4 +123,25 @@ public class ManageUser {
             throw new RuntimeException(e);
         }
     }
+    public static boolean loginUser(String userid, String password) {
+        Connection conn = JDBCUtil.getConnection();
+        String sql = "SELECT COUNT(*) FROM user_table WHERE userid = ? AND password = ?";
+
+        try(PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1,userid);
+            pstmt.setString(2,password);
+            ResultSet rs = pstmt.executeQuery();
+            ArrayList<User> users = new ArrayList<>();
+
+            if(rs.next()){
+                int count = rs.getInt(1);
+                return count > 0;
+            }
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException();
+        }
+        return false;
+    }
 }

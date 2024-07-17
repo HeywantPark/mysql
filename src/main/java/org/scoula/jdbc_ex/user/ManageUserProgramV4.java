@@ -5,8 +5,24 @@ import java.util.Scanner;
 
 public class ManageUserProgramV4 {
     public static void main(String[] args) throws SQLException {
-        ManageUser manageUser = new ManageUser();
         Scanner sc = new Scanner(System.in);
+        boolean isLoggedIn = false;
+
+        while (!isLoggedIn) {
+            System.out.println("회원관리 프로그램에 오신 것을 환영합니다.");
+            System.out.println("로그인을 해주십시오");
+            System.out.print("ID : ");
+            String userid = sc.nextLine();
+            System.out.print("PASSWORD : ");
+            String password = sc.nextLine();
+
+            if(!ManageUser.loginUser(userid,password)) {
+                System.out.println("로그인 정보가 잘못 되었습니다. 다시 시도하십시오.");
+            } else {
+                isLoggedIn = true;
+            }
+        }
+        ManageUser manageUser = new ManageUser();
 
         while (true) {
             System.out.println("======회원 관리 프로그램======");
