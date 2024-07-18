@@ -39,7 +39,7 @@ public class TodoDaoImpl implements TodoDao {
             ArrayList<TodoVo> todoVos = new ArrayList<>();
 
             while (rs.next()) {
-                int id = rs.getInt(1);
+                int id = rs.getInt("id");
                 String user_id = rs.getString("user_id");
                 String todo = rs.getString("todo");
                 boolean completed = rs.getBoolean("is_completed");
