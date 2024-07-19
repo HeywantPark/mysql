@@ -195,11 +195,15 @@ public class TodoDaoImpl implements TodoDao {
                 Timestamp created_at = rs.getTimestamp("created_at");
 
                 todoVos.add(new TodoVo(id, user_id, todo, completed, created_at));
+                String userName = rs.getString("name"); // 합쳐진 테이블 name 컬럼에서 이름 정보 받기
+                // TodoVo 객체의 toString 으로는 이름 출력이 불가능 하므로, 직접 sout 을 이용하여 위에서 각각 변수에 저장한 정보를 출력
+                System.out.printf("id: %d, user_id: %s, 작성자 이름: %s, todo: %s, is_completed: %b, created_at: %s%n", id, user_id, userName, todo, completed, created_at);
             }
 
             for(TodoVo todoVo : todoVos) {
                 System.out.println("id : " + todoVo.getId() + ", user_id : " + todoVo.getUser_id() + ", todo : " + todoVo.getTodo() + ",is_completed : " + todoVo.is_completed() + ",created_at : " + todoVo.getCreated_at());
             }
+
 
         } catch(SQLException e) {
             e.printStackTrace();
